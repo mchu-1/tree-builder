@@ -5,9 +5,7 @@ description = "Reconstruct clonal lineage trees from DNA barcode recordings."
 authors = ["mchu-1 <mchu1996@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [
-{include = "src", from = "."},
-]
+packages = [{include = "src", from = "."}]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
@@ -15,6 +13,8 @@ argparse = "^1.4.0"
 pytest = "^7.3.2"
 seaborn = "^0.13.0"
 numpy = "^1.26.1"
+matplotlib = "^3.8.0"
+pyyaml = "^6.0.1"
 
 
 [build-system]
