@@ -1,2 +1,2 @@
 # tree-builder
-Reconstruct clonal lineage trees from sequential DNA barcodes.
+Reconstruct clonal lineage trees from DNA barcode recordings.
