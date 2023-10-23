@@ -2,18 +2,7 @@
 
 """Profile clones based on DNA recordings."""
 
-import yaml
-
-def read_settings(config_f: str):
-    """
-    Generate settings dictionary from config YAML.
-    """
-    with open(config_f, "r") as f:
-        print(f"Reading config file {config_f} ...")
-        settings = yaml.safe_load(f)
-
-    return settings
-
+from src.utils import lookup, encode
 
 def get_sequences(input_f: str) -> list[str]:
     """
@@ -38,15 +27,6 @@ def get_sequences(input_f: str) -> list[str]:
                 continue
 
     return sequences
-
-
-def lookup(barcode: str, D: dict) -> int:
-    """
-    Lookup barcode in a dictionary.
-    """
-    s = D.get(barcode, 0) # return 0 for non-existent barcodes
-
-    return s
 
 
 def get_barcodes(sequence: str, spacer, h1, h2, s1, s2: str, l: int, D: dict) -> tuple[int]:
@@ -95,44 +75,12 @@ def get_barcodes(sequence: str, spacer, h1, h2, s1, s2: str, l: int, D: dict) ->
     return b
 
 
-def transpose(s, parity: int) -> int:
-  """
-  Transpose barcode given a parity.
-  """
-  t = (s-1)%parity+1
-
-  return t
-
-
-def encode(b: tuple[int], parity: int) -> int:
-  """
-  Encode recording based on barcode parity.
-  """
-  L = len(b)
-  code = 0
-  for i in range(L):
-    s = b[i]
-    t = transpose(s, parity)
-    code += t*parity**(L-1-i)
-
-  return code
-
-
-def get_recordings(input_f, config_f: str) -> list[int]:
+def get_recordings(input_f, spacer, h1, h2, s1, s2: str, l: int, D: dict, parity: int) -> list[int]:
     """
     Get recordings from a clone.
     """
     # Read sequences from input file
     sequences = get_sequences(input_f)
-
-    # Read settings from config file
-    settings = read_settings(config_f)
-    spacer = settings["spacer"]
-    h1, h2 = settings["h1"], settings["h2"]
-    s1, s2 = settings["s1"], settings["s2"]
-    l = settings["l"]
-    D = settings["D"]
-    parity = settings["parity"]
 
     # Get recordings
     recordings = []
@@ -145,5 +93,3 @@ def get_recordings(input_f, config_f: str) -> list[int]:
             recordings.append(code)
 
     return recordings
-
-
