@@ -1,0 +1,20 @@
+spacer: "GGCCCAGACTGAGCACGTGA"
+h1: "CAGAGGAAAGGAAGCCCTGCTTCCTCCA"
+h2: "AACAGCATACGTACCCCAGGTACGTGCA"
+s1: "TGA"
+s2: "ACT"
+l: 20
+D:
+  "AAAA": 1
+  "TTAC": 2
+  "CACT": 3
+  "GTCG": 4
+  "ATTT": 5
+  "TATG": 6
+  "CTGA": 7
+  "GAGC": 8
+  "GGAT": 9
+  "CCAG": 10
+  "TGCA": 11
+  "ACCC": 12
+parity: 6
