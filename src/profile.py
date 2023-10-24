@@ -84,6 +84,7 @@ def get_recordings(input_f, spacer, h1, h2, s1, s2: str, l: int, D: dict, parity
 
     # Get recordings
     recordings = []
+    print(f"Retrieving recordings from {input_f} ...")
     for sequence in sequences:
         b = get_barcodes(sequence, spacer, h1, h2, s1, s2, l, D)
         if len(b) == 0 or 0 in b: # remove zero-length recordings and unrecognized barcodes

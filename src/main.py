@@ -49,7 +49,6 @@ def reconstruct_lineage_tree(input_d, output_f, config_f: str) -> None:
 
     # Retrieve and encode clonal recordings
     clones = []
-    print("Retrieving recordings ...")
     for fastq_file in fastq_files:
         fastq_name = fastq_file.split("/")[-1].split(".")[0]
         print(f"Profiling {fastq_name} ...")
