@@ -62,7 +62,7 @@ def reconstruct_lineage_tree(input_d, output_f, config_f: str) -> None:
 
     print("Bootstrapping and visualizing tree ...")
     plt.figure()
-    sns.heatmap(A, cmap = "viridis")
+    sns.heatmap(A, cmap = "mako")
     plt.savefig(output_f, dpi=1000)
 
     print("Done.")
