@@ -51,8 +51,8 @@ def reconstruct_lineage_tree(input_d, output_f, config_f: str) -> None:
     clones = []
     print("Retrieving recordings ...")
     for fastq_file in fastq_files:
-        fastq_name = fastq_file.split("/")[-1].split(".")[0].split("_")[0]
-        print(f"Profiling clone {fastq_name} ...")
+        fastq_name = fastq_file.split("/")[-1].split(".")[0]
+        print(f"Profiling {fastq_name} ...")
         clone = profile.get_recordings(fastq_file, spacer, h1, h2, s1, s2, l, D, parity)
         clones.append(clone)
 
@@ -60,14 +60,18 @@ def reconstruct_lineage_tree(input_d, output_f, config_f: str) -> None:
     print("Generating lineage matrix ...")
     A = bootstrap.generate_lineage_matrix(clones, parity)
 
-    print("Bootstrapping tree ...")
+    print("Bootstrapping and visualizing tree ...")
     plt.figure()
-    sns.heatmap(A, cmap = "viridis", xticklabels = False, yticklabels = False)
+    sns.heatmap(A, cmap = "viridis")
     plt.savefig(output_f, dpi=1000)
 
     print("Done.")
 
 
 if __name__ == "__main__":
+    print("@@@@@@@@@@@@@@@@@@@@ tree-builder @@@@@@@@@@@@@@@@@@@@")
+    print("------------------------------------------------------")
+    print("Reconstruct a lineage tree from clonal DNA recordings.")
+    print("------------------------------------------------------")
     args = parse_args()
     reconstruct_lineage_tree(args.input, args.output, args.config)
