@@ -72,7 +72,7 @@ def generate_lineage_matrix(clones: list, parity: int) -> np.array:
         if is_lineage_relation(i, j, P[:,x]):
           s = 1-abs(P[i][x]-P[j][x])
           w = measure(x, parity)
-          S += w*s
+          S += (parity**w)*s
         else:
           continue
       A[i][j] = S
