@@ -35,13 +35,15 @@ def generate_population_matrix(clones: list, parity: int) -> np.array:
   dim = max(len(a) for a in A)
   # Pad all transition matrices to the same dimension with zeros
   A = [np.pad(a, (0, dim-len(a)), 'constant') for a in A]
+  # Convert to numpy array
+  A = np.array(A)
       
   return A
 
 
 def is_lineage_relation(i, j: int, c: np.array) -> bool:
   """
-  Determine whether there is a lineage relation between two clones within a code vector.
+  Determine whether there is a lineage relation between two clones.
   """
   for x, p in enumerate(c):
     if x == i or x == j:
@@ -71,7 +73,7 @@ def generate_lineage_matrix(clones: list, parity: int) -> np.array:
         if is_lineage_relation(i, j, P[:,x]):
           s = 1-abs(P[i][x]-P[j][x])
           w = x//(parity+2)
-          S += (parity**w)*s
+          S += w*s
         else:
           continue
       A[i][j] = S
