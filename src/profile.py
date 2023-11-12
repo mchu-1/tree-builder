@@ -2,7 +2,7 @@
 
 """Profile clones based on DNA recordings."""
 
-from src.utils import lookup, encode
+from src.utils import *
 
 def get_sequences(input_f: str) -> list[str]:
     """
@@ -29,7 +29,7 @@ def get_sequences(input_f: str) -> list[str]:
     return sequences
 
 
-def get_barcodes(sequence: str, spacer, h1, h2, s1, s2: str, l: int, D: dict) -> tuple[int]:
+def get_barcodes(sequence: str, spacer, h1, h2, s1, s2: str, l: int, D: dict, parity: int) -> tuple[int]:
     """
     Get barcodes from a sequence.
     """
@@ -61,7 +61,8 @@ def get_barcodes(sequence: str, spacer, h1, h2, s1, s2: str, l: int, D: dict) ->
         else:
             new_barcode = sequence[ix + l:][:4]
             s = lookup(new_barcode, D)
-            b.append(s)
+            t = transpose(b, parity)
+            b.append(t)
 
             if start == start_1:
                 start, end = start_2, end_2
@@ -75,9 +76,9 @@ def get_barcodes(sequence: str, spacer, h1, h2, s1, s2: str, l: int, D: dict) ->
     return b
 
 
-def get_recordings(input_f, spacer, h1, h2, s1, s2: str, l: int, D: dict, parity: int) -> list[int]:
+def get_recordings(input_f, spacer, h1, h2, s1, s2: str, l: int, D: dict, parity: int) -> list:
     """
-    Get recordings from a clone.
+    Generate transition matrix of recordings in a clone.
     """
     # Read sequences from input file
     sequences = get_sequences(input_f)
@@ -85,12 +86,13 @@ def get_recordings(input_f, spacer, h1, h2, s1, s2: str, l: int, D: dict, parity
     # Get recordings
     recordings = []
     print(f"Retrieving recordings from {input_f} ...")
+    print(f"Generating transition matrix ...")
+    recordings = []
     for sequence in sequences:
-        b = get_barcodes(sequence, spacer, h1, h2, s1, s2, l, D)
-        if len(b) == 0 or 0 in b: # remove zero-length recordings and unrecognized barcodes
+        b = get_barcodes(sequence, spacer, h1, h2, s1, s2, l, D, parity)
+        if len(b) == 0 or -1 in b: # remove zero-length recordings and unrecognized barcodes
             continue
         else:
-            code = encode(b, parity)
-            recordings.append(code)
+            recordings.append(b)
 
     return recordings

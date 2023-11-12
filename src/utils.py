@@ -4,8 +4,7 @@ def lookup(barcode: str, D: dict) -> int:
     """
     Lookup barcode in a dictionary.
     """
-    s = D.get(barcode, 0) # return 0 for non-existent barcodes
-
+    s = D.get(barcode, -1) # return -1 for unknown barcodes
     return s
 
 
@@ -18,30 +17,18 @@ def transpose(s, parity: int) -> int:
   return t
 
 
-def encode(b: tuple[int], parity: int) -> int:
+def transit(b: tuple[int], parity: int) -> list:
   """
-  Encode recording based on barcode parity.
+  Get all barcode transitions in a recording.
   """
   L = len(b)
-  code = 0
+  T = [0] # placeholder for beginning of recording
   for i in range(L):
     s = b[i]
     t = transpose(s, parity)
-    code += t*parity**(L-1-i)
+    T.append(t)
+  T.append(parity+1) # placeholder for end of recording
 
-  return code
+  T = list(zip(T[:-1], T[1:]))
 
-
-def measure(code, parity: int) -> int:
-  """
-  Measure length of a recording.
-  """
-  Q = code
-  L = 0
-  while Q > 0:
-    Q, R = divmod(Q, parity)
-    if R == 0:
-      Q -= 1
-    L += 1
-
-  return L
+  return T
