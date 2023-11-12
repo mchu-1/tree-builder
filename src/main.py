@@ -4,7 +4,7 @@ import argparse, yaml
 from pathlib import Path
 import matplotlib.pyplot as plt
 import seaborn as sns
-from src import profile, bootstrap
+import profile, bootstrap
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()

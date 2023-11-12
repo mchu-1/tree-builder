@@ -2,7 +2,7 @@
 
 """Profile clones based on DNA recordings."""
 
-from src.utils import *
+from utils import *
 
 def get_sequences(input_f: str) -> list[str]:
     """
@@ -61,7 +61,7 @@ def get_barcodes(sequence: str, spacer, h1, h2, s1, s2: str, l: int, D: dict, pa
         else:
             new_barcode = sequence[ix + l:][:4]
             s = lookup(new_barcode, D)
-            t = transpose(b, parity)
+            t = transpose(s, parity)
             b.append(t)
 
             if start == start_1:
