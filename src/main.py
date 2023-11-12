@@ -49,11 +49,15 @@ def reconstruct_lineage_tree(input_d, output_f, config_f: str) -> None:
 
     # Retrieve and encode clonal recordings
     clones = []
+    names = []
     for fastq_file in fastq_files:
         fastq_name = fastq_file.split("/")[-1].split(".")[0]
+        names.append(fastq_name)
         print(f"Profiling {fastq_name} ...")
         clone = profile.get_recordings(fastq_file, spacer, h1, h2, s1, s2, l, D, parity)
         clones.append(clone)
+    # Sort clones alpha-numerically by name
+    clones = [x for _,x in sorted(zip(names, clones), key = lambda x: x[0])]
 
     # Bootstrap and visualize lineage tree
     print("Generating lineage matrix ...")
